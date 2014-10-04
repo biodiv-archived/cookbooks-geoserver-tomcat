@@ -20,6 +20,7 @@ Requires the following cookbooks
 * `database`
 * `postgresql`
 * `postgis`
+* `tomcat`
 
 
 Attributes
