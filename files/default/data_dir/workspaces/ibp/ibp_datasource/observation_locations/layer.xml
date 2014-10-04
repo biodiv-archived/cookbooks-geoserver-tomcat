@@ -1,0 +1,15 @@
+<layer>
+  <name>observation_locations</name>
+  <id>LayerInfoImpl-74bcbea5:148b16ddd5a:-7ffb</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl--570ae188:124761b8d78:-7fdf</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-74bcbea5:148b16ddd5a:-7ffc</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+</layer>

@@ -1,0 +1,11 @@
+<Context docBase="<%= node['geoserver']['war'] %>">
+	<Resource name="jdbc/jettyds" auth="Container"
+          type="javax.sql.DataSource" driverClassName="org.postgresql.Driver"
+          url="jdbc:postgresql://localhost/<%= node['geoserver']['database'] %>"
+          username="<%= node['geoserver']['database-user'] %>" password="<%= node['geoserver']['database-password'] %>" maxActive="20" maxIdle="10"
+          maxWait="-1"/>
+   
+   	<Parameter name="GEOSERVER_DATA_DIR" value="<%= node.geoserver.data %>" override="false" />
+  
+</Context>
+

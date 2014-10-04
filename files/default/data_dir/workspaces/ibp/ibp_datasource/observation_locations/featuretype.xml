@@ -1,0 +1,33 @@
+<featureType>
+  <id>FeatureTypeInfoImpl-74bcbea5:148b16ddd5a:-7ffc</id>
+  <name>observation_locations</name>
+  <nativeName>observation_locations</nativeName>
+  <namespace>
+    <id>NamespaceInfoImpl-74bcbea5:148b16ddd5a:-7ffe</id>
+  </namespace>
+  <title>observation_locations</title>
+  <keywords>
+    <string>observation_locations</string>
+    <string>features</string>
+  </keywords>
+  <srs>EPSG:4326</srs>
+  <nativeBoundingBox>
+    <minx>-180.0</minx>
+    <maxx>180.0</maxx>
+    <miny>-90.0</miny>
+    <maxy>90.0</maxy>
+  </nativeBoundingBox>
+  <latLonBoundingBox>
+    <minx>-180.0</minx>
+    <maxx>180.0</maxx>
+    <miny>-90.0</miny>
+    <maxy>90.0</maxy>
+  </latLonBoundingBox>
+  <projectionPolicy>FORCE_DECLARED</projectionPolicy>
+  <enabled>true</enabled>
+  <store class="dataStore">
+    <id>DataStoreInfoImpl-74bcbea5:148b16ddd5a:-7ffd</id>
+  </store>
+  <maxFeatures>0</maxFeatures>
+  <numDecimals>0</numDecimals>
+</featureType>
