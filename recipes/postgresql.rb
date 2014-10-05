@@ -18,6 +18,7 @@
 #
 
 include_recipe "postgresql::server"
+include_recipe "postgresql::client"
 include_recipe "database::postgresql"
 
 postgresql_connection_info = {:host => "localhost",
