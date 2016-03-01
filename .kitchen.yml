@@ -1,0 +1,51 @@
+---
+driver:
+  name: docker
+  privileged: true
+  use_sudo: false
+
+provisioner:
+  name: chef_zero
+
+# Uncomment the following verifier to leverage Inspec instead of Busser (the
+# default verifier)
+# verifier:
+#   name: inspec
+
+platforms:
+- name: ubuntu-14.04
+  driver:
+    image: ubuntu:14.04
+    platform: ubuntu
+    disable_upstart: false
+    run_command: /sbin/init
+    provision_command:
+      - /usr/bin/apt-get update
+      - /usr/bin/apt-get install apt-transport-https net-tools -y
+    forward:
+      - 80:8081
+- name: centos-6
+  driver:
+    image: centos:6
+    platform: rhel
+    run_command: /sbin/init
+    provision_command:
+      - /usr/bin/yum install -y initscripts net-tools wget
+    forward:
+      - 80:8080
+- name: centos-7
+  run_list:
+    - recipe[yum]
+  driver:
+    image: centos:7
+    platform: rhel
+    run_command: /usr/lib/systemd/systemd
+    provision_command:
+    - /bin/yum install -y initscripts net-tools wget
+    forward:
+      - 80:8082
+suites:
+  - name: default
+    run_list:
+      - recipe[geoserver-tomcat::default]
+    attributes:
