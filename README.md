@@ -73,12 +73,26 @@ Create a file geoserver.json with the following contents.
         ]
     }
 
+Test Kitchen
+============
+Test kitchen is setup using the kitchen docker-driver. Install it with:
+```
+chef gem install kitchen-docker
+```
+
+Port forwarding.
+The 3 boxes created by test kitchen have the bellow port 80 forwarding.
+Ubuntu 14.04, 8081
+CentOS 7, 8082
+CentOS 6, 8080
+
 License and Author
 ==================
 
 - Author:: Ashish Shinde (<ashish@strandls.com>)
 - Author:: Sandeep Tadekar (<sandeept@strandls.com>)
 - Author:: Prabhakar Rajagopal (<prabha@strandls.com>)
+- Author:: Josh Beauregard (<josh_beauregard@harvard.edu>))
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
