@@ -1,5 +1,8 @@
 Geoserver-tomcat Cookbook
 =============
+
+
+
 Installs and configures geoserver to run on tomcat application server.
 
 Requirements
@@ -9,9 +12,10 @@ Requirements
 
 * Ubuntu 14.04 LTS
 
-Tested on:
+Tested agaist:
 
 * Ubuntu 14.04 LTS
+* CentOS 6 and 7
 
 
 ### Cookbooks
