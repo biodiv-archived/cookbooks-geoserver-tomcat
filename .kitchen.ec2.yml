@@ -1,0 +1,29 @@
+---
+driver:
+  name: ec2
+  require_chef_omnibus: true
+  instance_type: t2.micro
+
+transport:
+  ssh_key: /home/atg/.ssh/id_rsa
+  connection_timeout: 10
+  connection_retries: 5
+
+provisioner:
+  name: chef_zero
+
+# Uncomment the following verifier to leverage Inspec instead of Busser (the
+# default verifier)
+# verifier:
+#   name: inspec
+
+platforms:
+  - name: ubuntu-14.04
+    driver:
+      image_id: ami-fce3c696
+
+suites:
+  - name: default
+    run_list:
+      - recipe[geoserver-tomcat::default]
+    attributes:
