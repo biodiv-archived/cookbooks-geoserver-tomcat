@@ -17,8 +17,6 @@
 # limitations under the License.
 #
 
-include_attribute "tomcat"
-
 expand!
 
 default[:geoserver][:version]   = "2.5.2"
@@ -32,3 +30,4 @@ default[:geoserver][:download]  = "#{geoserver.workingDir}/geoserver-#{geoserver
 default[:geoserver][:home]          = "/var/local/geoserver-#{geoserver.version}"
 default[:geoserver][:data]          = "/var/local/geoserver-#{geoserver.version}/data"
 default[:geoserver][:context]       = "geoserver"
+default[:geoserver][:tomcat_instance]    = "geoserver"

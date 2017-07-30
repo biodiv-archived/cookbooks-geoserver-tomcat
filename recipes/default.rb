@@ -17,15 +17,11 @@
 # limitations under the License.
 #
 
-include_recipe "tomcat"
-include_recipe "application"
-include_recipe "postgis"
+include_recipe "java"
 
-apt_package "unzip" do
+package "unzip" do
   action :install
 end
-
-tomcatService = "tomcat#{node['tomcat']['base_version']}"
 
 remote_file node.geoserver.download do
   source   node.geoserver.link
@@ -47,41 +43,44 @@ bash "Creating temporary working directory" do
   EOH
 end
 
-remote_directory "Extract amdb jar" do 
-  path "/tmp/geoserver-temp/WEB-INF/lib" 
+remote_directory "Extract amdb jar" do
+  path "/tmp/geoserver-temp/WEB-INF/lib"
   source "geoserver-lib"
 end
 
 bash "Adding amdb jar to  geoserver  war file #{node.geoserver.war}" do
   code <<-EOH
   cd /tmp/geoserver-temp
-  jar -uvf #{node.geoserver.war} WEB-INF/lib 
+  jar -uvf #{node.geoserver.war} WEB-INF/lib
   chmod +r #{node.geoserver.war}
   cd -
   rm -rf /tmp/geoserver-temp
   EOH
 end
 
-application node.geoserver.context do
-    path node.geoserver.home
-    owner node["tomcat"]["user"]
-    group node["tomcat"]["group"]
-    repository node.geoserver.war
-    revision     "HEAD"
-    scm_provider Chef::Provider::File::Deploy
+# Setup user/group
+poise_service_user "tomcat user" do
+  user "tomcat"
+  group "tomcat"
+  shell "/bin/bash"
+end
 
-    java_webapp do
-        context_template "geoserver.context.erb"
+cerner_tomcat node.geoserver.tomcat_instance do
+  web_app "geoserver" do
+    source "file://#{node.geoserver.war}"
+
+    template "META-INF/context.xml" do
+      source "geoserver.context.erb"
     end
-    tomcat
+  end
 end
 
 remote_directory node.geoserver.data do
   source       "data_dir"
-  owner        node.tomcat.user
-  group        node.tomcat.group
-  files_owner  node.tomcat.user
-  files_group  node.tomcat.group
+  owner        "tomcat"
+  group        "tomcat"
+  files_owner  "tomcat"
+  files_group  "tomcat"
   files_backup 0
   files_mode   "644"
   purge        true
@@ -92,8 +91,7 @@ remote_directory node.geoserver.data do
 end
 
 execute "change-permission-#{node.geoserver.data}" do
-  command "chown -R #{node.tomcat.user}:#{node.tomcat.group} #{node.geoserver.data}"
+  command "chown -R tomcat:tomcat #{node.geoserver.data}"
   user "root"
   action :nothing
 end
-

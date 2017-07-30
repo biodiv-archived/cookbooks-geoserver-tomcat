@@ -42,6 +42,8 @@ postgresql_database_user node['geoserver']['database-user'] do
   action :create
 end
 
+package "postgresql-#{node['postgresql']['version']}-postgis-scripts"
+
 # setup postgis extension
 postgresql_database 'create postgis extension' do
   connection      postgresql_connection_info
@@ -58,4 +60,3 @@ postgresql_database_user node['geoserver']['database-user'] do
   privileges [:all]
   action :grant
 end
-
