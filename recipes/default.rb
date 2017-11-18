@@ -66,6 +66,7 @@ poise_service_user "tomcat user" do
 end
 
 cerner_tomcat node.geoserver.tomcat_instance do
+  version "7.0.54"
   web_app "geoserver" do
     source "file://#{node.geoserver.war}"
 
@@ -73,6 +74,17 @@ cerner_tomcat node.geoserver.tomcat_instance do
       source "geoserver.context.erb"
     end
   end
+
+  java_settings("-Xms" => "512m",
+                "-D#{node.biodiv.appname}_CONFIG_LOCATION=".upcase => "#{node.biodiv.additional_config}",
+                "-Dlog4jdbc.spylogdelegator.name=" => "net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator",
+                "-Dfile.encoding=" => "UTF-8",
+                "-Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=" => "true",
+                "-Xmx" => "4g",
+                "-XX:PermSize=" => "512m",
+                "-XX:MaxPermSize=" => "512m",
+                "-XX:+UseParNewGC" => "")
+
 end
 
 remote_directory node.geoserver.data do
