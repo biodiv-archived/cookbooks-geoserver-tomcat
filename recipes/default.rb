@@ -77,6 +77,7 @@ cerner_tomcat node.geoserver.tomcat_instance do
 
   java_settings("-Xms" => "512m",
                 "-D#{node.biodiv.appname}_CONFIG_LOCATION=".upcase => "#{node.biodiv.additional_config}",
+                "-D#{node.fileops.appname}_CONFIG=".upcase => "#{node.fileops.additional_config}",
                 "-Dlog4jdbc.spylogdelegator.name=" => "net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator",
                 "-Dfile.encoding=" => "UTF-8",
                 "-Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=" => "true",
