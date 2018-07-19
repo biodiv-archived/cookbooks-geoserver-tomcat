@@ -66,7 +66,7 @@ poise_service_user "tomcat user" do
 end
 
 cerner_tomcat node.geoserver.tomcat_instance do
-  version "7.0.54"
+  version "8.5.27"
   web_app "geoserver" do
     source "file://#{node.geoserver.war}"
 
