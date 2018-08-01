@@ -48,15 +48,32 @@ remote_directory "Extract amdb jar" do
   source "geoserver-lib"
 end
 
-bash "Adding amdb jar to  geoserver  war file #{node.geoserver.war}" do
-  code <<-EOH
-  cd /tmp/geoserver-temp
-  jar -uvf #{node.geoserver.war} WEB-INF/lib
-  chmod +r #{node.geoserver.war}
-  cd -
-  rm -rf /tmp/geoserver-temp
-  EOH
+remote_file "Fetching vector files plugin for geoserver" do
+   path "/tmp/geoserver-temp/WEB-INF/lib/geoserver-vectortiles-plugin.zip"
+   source "#{node.geoserver.vectorPluginLink}"
+   action :create
 end
+
+bash "Adding vector files plugin to geoserver war file #{node.geoserver.war}" do
+   code <<-EOH
+   cd /tmp/geoserver-temp
+   unzip WEB-INF/lib/geoserver-vectortiles-plugin.zip -d WEB-INF/lib
+   jar -uvf #{node.geoserver.war} WEB-INF/lib
+   chmod +r #{node.geoserver.war}
+   cd -
+   rm -rf /tmp/geoserver-temp
+   EOH
+end
+
+#bash "Adding amdb jar to  geoserver  war file #{node.geoserver.war}" do
+#  code <<-EOH
+#  cd /tmp/geoserver-temp
+#  jar -uvf #{node.geoserver.war} WEB-INF/lib
+#  chmod +r #{node.geoserver.war}
+#  cd -
+#  rm -rf /tmp/geoserver-temp
+#  EOH
+#end
 
 # Setup user/group
 poise_service_user "tomcat user" do
@@ -77,7 +94,7 @@ cerner_tomcat node.geoserver.tomcat_instance do
 
   java_settings("-Xms" => "512m",
                 "-D#{node.biodiv.appname}_CONFIG_LOCATION=".upcase => "#{node.biodiv.additional_config}",
-                "-D#{node.biodivApi.configname}".upcase => "#{node.biodivApi.additional_config}",
+                "-D#{node.biodivApi.configname}=".upcase => "#{node.biodivApi.additional_config}",
                 "-D#{node.fileops.appname}_CONFIG=".upcase => "#{node.fileops.additional_config}",
                 "-Dlog4jdbc.spylogdelegator.name=" => "net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator",
                 "-Dfile.encoding=" => "UTF-8",
