@@ -42,7 +42,14 @@ postgresql_database_user node['geoserver']['database-user'] do
   action :create
 end
 
-package "postgresql-#{node['postgresql']['version']}-postgis-scripts"
+case node['platform_family']
+when 'rhel', 'fedora'
+  package "postgis2_#{node['postgresql']['version']}"
+  package "postgis2_#{node['postgresql']['version']}-client"
+when 'debian', 'ubuntu'
+  package "postgresql-#{node['postgresql']['version']}-postgis-scripts"
+end
+
 
 # setup postgis extension
 postgresql_database 'create postgis extension' do
